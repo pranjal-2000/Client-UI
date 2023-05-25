@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from "react";
 import "./Dashboard.css";
 const { Dialog } = require('primereact/dialog');
+const { Tooltip } = require('primereact/tooltip');
+const { ProgressBar } = require('primereact/progressbar');
+const { Image } = require('primereact/image')
+
 
 
 function Dashboard() {
-    function showReward(){
-        console.log("heelloooooooooooooooo");
+    const [showRewardDialog, setShowRewardDialog] = useState([false, false, false]);
 
+    function showReward(number){
+        console.log("heelloooooooooooooooo"+number);
+        let tempShowRewardDialog = [false, false, false];
+        tempShowRewardDialog[number] = true;
+        setShowRewardDialog(tempShowRewardDialog);
+    }
+
+    function hideRewardDialog(){
+        console.log("byeeeeeeee")
+        let tempShowRewardDialog = [false, false, false]
+        setShowRewardDialog(tempShowRewardDialog);
     }
   return (
     <div>
@@ -316,27 +330,31 @@ function Dashboard() {
                     <div className="topbar-divider d-none d-sm-block"></div>
 
                     {/* <!-- Nav Item - User Information --> */}
-                    <li className="nav-item dropdown no-arrow">
+                    <li className="nav-item dropdown no-arrow mx-1">
                         <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <span className="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                             <img className="img-profile rounded-circle"
                                 src="img/undraw_profile.svg"/>
+                            <span className="badge badge- badge-counter"> 
+                            <img width="5px" className="img-profile rounded-circle"
+                                src="img/Badge1.svg"/></span>
                         </a>
                         {/* <!-- Dropdown - User Information --> */}
-                        <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        <div style={{width:'300px'}} className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
-                            <a className="dropdown-item" href="#">
-                                <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                            
+                            <a style={{alignItems: 'center'}} className="dropdown-item" href="#">
+                                {/* <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> */}
+                                <img style={{marginLeft:65}} className="img-profile rounded-circle"
+                                src="img/Badge1.svg"/>
                             </a>
                             <a className="dropdown-item" href="#">
-                                <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
+                                <span style={{fontSize: 20, marginLeft:65}}>Douglas McGee</span>
                             </a>
                             <a className="dropdown-item" href="#">
-                                <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
+                              <ProgressBar id="progressBar1" value={90}></ProgressBar>
+                              50 more points to reach Milestone!
                             </a>
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -364,20 +382,51 @@ function Dashboard() {
                 {/* <!-- Content Row --> */}
                 <div className="row">
 
-                    {/* <!-- Notification --> */}
+                    {/* <!-- My Rewards --> */}
                     <div className="col-xl-4 col-md-6 mb-5">
                         <div className="card border-left-primary shadow h-100 py-2">
                             <div className="card-body">
-                                <div className="row no-gutters align-items-center">
+                            <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
                                         <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Notification</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">ABC</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">DIP XUS</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">5 days till freedom</div>
+                                            My Rewards</div>
+                                        
+                                        <a href="#" onClick={()=> showReward(0)}>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 1</div>
+                                        </a>
+                                        <Dialog header="Congratulations! You just earned a Reward!" maximizable modal style={{ height:'70vw' }}  visible={showRewardDialog[0]} onHide={() => hideRewardDialog()}>
+                                            <img height="350px" src="img/trophy_3_1st.gif">
+                                            </img>
+                                        </Dialog>
+                                         
+
+                                        
+                                        {/* {this.state.taskOwner===true && <Dialog header="Tasks" visible={this.state.displayMaximizable} maximizable modal style={{ width: '20vw' }} onHide={() => this.onHide('displayMaximizable')}>
+                                            <p>Select task :</p>
+                                            <ListBox value={this.state.selectedTaskOwner} options={this.taskOwnerOptions} onChange={this.onTaskOwnerSelect}  />
+                                        </Dialog>} */}
+                                        
+                                        {/* Pranjal: add dialog box with img tag src = from gifs (for each reward add a separate dialog box with diff file path)  */}
+                                        
+                                        <a href="#" onClick={()=> showReward(1)}>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 2</div>
+                                        </a>
+                                        <Dialog header="Congratulations! You just earned a Reward!" maximizable modal style={{ height:'70vw', backgroundColor:'#13132b'}} visible={showRewardDialog[1]} onHide={() => hideRewardDialog()}>
+                                            <img height="350px" src="img/bronze_medal.gif">
+                                            </img>
+                                        </Dialog>
+
+                                        <a href="#" onClick={()=> showReward(2)}>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 3</div>
+                                        </a>
+                                        <Dialog header="Congratulations! You just earned a Reward!" maximizable modal style={{ height:'70vw' }}  visible={showRewardDialog[2]} onHide={() => hideRewardDialog()}>
+                                            <img height="350px" src="img/trapeze_trophy_1st.gif">
+                                            </img>
+                                        </Dialog>
+
                                     </div>
                                     <div className="col-auto">
-                                        <i className="fas fa-calendar fa-2x text-gray-300"></i>
+                                        <i className="fas fa-comments fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -411,9 +460,12 @@ function Dashboard() {
                                         <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Points Allocation</div>
                                         <div className="row no-gutters align-items-center">
                                             <div className="col-auto">
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">Order 1: 30</div>
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">Order 2: 90</div>
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">Order 3: 70</div>
+                                                <Tooltip target='#order1' content="Low Score (Order approval delayed)"/>
+                                                <Tooltip target='#order2' content="High Score (Superfast Approval!)"/>
+                                                <Tooltip target='#order3' content="Med Score (Order halted)"/>
+                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order1">Order 1: 30</div>
+                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order2">Order 2: 90</div>
+                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order3">Order 3: 70</div>
                                             </div>
                                             {/* <div className="col">
                                                 <div className="progress progress-sm mr-2">
@@ -431,35 +483,20 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* <!-- Pending Requests Card Example --> */}
-                    <div className="col-xl-4 col-md-6 mb-5">
+                    {/* <!-- Notifications --> */}
+                    <div className="col-xl-12 col-md-6 mb-5">
                         <div className="card border-left-warning shadow h-100 py-2">
                             <div className="card-body">
                                 <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
-                                        <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            My Rewards</div>
-                                        
-                                        <a href="#" onClick={showReward}>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 1</div>
-                                        </a>
-                                        {/* {this.state.taskOwner===true && <Dialog header="Tasks" visible={this.state.displayMaximizable} maximizable modal style={{ width: '20vw' }} onHide={() => this.onHide('displayMaximizable')}>
-                                            <p>Select task :</p>
-                                            <ListBox value={this.state.selectedTaskOwner} options={this.taskOwnerOptions} onChange={this.onTaskOwnerSelect}  />
-                                        </Dialog>} */}
-                                        
-                                        {/* Pranjal: add dialog box with img tag src = from gifs (for each reward add a separate dialog box with diff file path)  */}
-                                        
-                                        <a href="#" onClick={showReward}>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 2</div>
-                                        </a>
-
-                                        <a href="#" onClick={showReward}>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 3</div>
-                                        </a>
+                                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Notifications</div>
+                                        <div className="h5 mb-0 font-weight-bold text-gray-800">ABC</div>
+                                        <div className="h5 mb-0 font-weight-bold text-gray-800">DIP XUS</div>
+                                        <div className="h5 mb-0 font-weight-bold text-gray-800">5 days till freedom</div>
                                     </div>
                                     <div className="col-auto">
-                                        <i className="fas fa-comments fa-2x text-gray-300"></i>
+                                        <i className="fas fa-calendar fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>

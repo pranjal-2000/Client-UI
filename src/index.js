@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 //import './index.css';
 import './Dashboard.css'
+import "primereact/resources/themes/vela-blue/theme.css";
+import "primereact/resources/primereact.min.css";
 import Dashboard from './Dashboard';
 import reportWebVitals from './reportWebVitals';
 
