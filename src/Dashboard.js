@@ -10,6 +10,15 @@ const { Image } = require('primereact/image')
 function Dashboard() {
     const [showRewardDialog, setShowRewardDialog] = useState([false, false, false]);
 
+    //user's current points
+    const [userPoints, setUserPoints] = useState(1947);
+
+    //total points needed for each milestone
+    const [milestonePoints, setMilestonePoints] = useState(2000);
+
+    //leaderboard table
+    
+
     function showReward(number){
         console.log("heelloooooooooooooooo"+number);
         let tempShowRewardDialog = [false, false, false];
@@ -350,11 +359,18 @@ function Dashboard() {
                                 src="img/Badge1.svg"/>
                             </a>
                             <a className="dropdown-item" href="#">
-                                <span style={{fontSize: 20, marginLeft:65}}>Douglas McGee</span>
+                                <span className="text-xs text-info text-uppercase mb-1" style={{fontSize: 20, marginLeft:30}}>Douglas McGee</span>
+                                {userPoints>(0.5*milestonePoints) && 
+                                   <span className="text-xs font-weight-bold text-success text-uppercase mb-1" style={{fontSize: 12, marginLeft:5}}>{userPoints}/{milestonePoints}</span>
+                                } 
+                                 {userPoints<=(0.5*milestonePoints) && 
+                                   <span className="text-xs font-weight-bold text-warning text-uppercase mb-1" style={{fontSize: 12, marginLeft:5}}>{userPoints}/{milestonePoints}</span>
+                                }
+                             
                             </a>
                             <a className="dropdown-item" href="#">
-                              <ProgressBar id="progressBar1" value={90}></ProgressBar>
-                              50 more points to reach Milestone!
+                              <ProgressBar id="progressBar1" value={userPoints*100/milestonePoints}></ProgressBar>
+                              {milestonePoints-userPoints} more points to reach Milestone!
                             </a>
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -441,7 +457,9 @@ function Dashboard() {
                                     <div className="col mr-2">
                                         <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Leaderboard</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                        <div className="h5 mb-0 font-weight-bold text-gray-800">
+                                            table add
+                                        </div>
                                     </div>
                                     <div className="col-auto">
                                         <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
