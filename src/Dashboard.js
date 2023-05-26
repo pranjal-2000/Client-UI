@@ -14,12 +14,16 @@ function Dashboard() {
     const [showRewardDialog, setShowRewardDialog] = useState([false, false, false]);
     //points dialog
     const [showPointsDialog, setShowPointsDialog] = useState(false);
+    //badge dialog
+    const [showBadgeDialog, setShowBadgeDialog] = useState(false);
 
     //user's current points
     const [userPoints, setUserPoints] = useState(1947);
 
     //total points needed for each milestone
     const [milestonePoints, setMilestonePoints] = useState(2000);
+
+    const [badge, setBadge] = useState("img/Badge1.svg");
 
     //leaderboard table
     let node=[
@@ -45,7 +49,7 @@ function Dashboard() {
         "key": "2",
         "data":{
             "Rank":"3",
-            "Name":"Douglas Mcgee",
+            "Name":"Douglas Mcgee (You)",
             "Team":"Production",
             "Score":"2770/5000"
             }
@@ -88,6 +92,12 @@ function Dashboard() {
 
     function hidePointsDialog(){
         setShowPointsDialog(false);
+        setShowBadgeDialog(true);
+    }
+
+    function hideBadgeDialog(){
+        setBadge("img/Badge2.svg");
+        setShowBadgeDialog(false);
     }
 
     function addNotif() {
@@ -99,6 +109,8 @@ function Dashboard() {
     function addPoints() {
         var div = document.getElementById("order4");
         div.style.display = "block";
+        let newUserPts = ((userPoints + 70)-2000);
+        setUserPoints(newUserPts);
         setShowPointsDialog(true);
         console.log("Function2 callled")
       }
@@ -128,12 +140,12 @@ function Dashboard() {
             </div>
             <div className="sidebar-brand-text mx-3"> Paradigmer-Client </div>
         </a>
-        </ul>  
+    </ul>  
         {/* <!-- End of Sidebar --> */}
 
 
         {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content-wrapper" class="d-flex flex-column">
         {/* <!-- Main Content --> */}
         <div id="content">
 
@@ -300,7 +312,7 @@ function Dashboard() {
                                 src="img/undraw_profile.svg"/>
                             <span className="badge badge- badge-counter"> 
                             <img width="5px" className="img-profile rounded-circle"
-                                src="img/Badge1.svg"/></span>
+                                src={badge}/></span>
                         </a>
                         {/* <!-- Dropdown - User Information --> */}
                         <div style={{width:'300px'}} className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -309,7 +321,7 @@ function Dashboard() {
                             <a style={{alignItems: 'center'}} className="dropdown-item" href="#">
                                 {/* <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> */}
                                 <img style={{marginLeft:65}} className="img-profile rounded-circle"
-                                src="img/Badge1.svg"/>
+                                src={badge}/>
                             </a>
                             <a className="dropdown-item" href="#">
                                 <span className="text-xs text-info text-uppercase mb-1" style={{fontSize: 20, marginLeft:30}}>Douglas McGee</span>
@@ -361,9 +373,9 @@ function Dashboard() {
                                             My Rewards</div>
                                         
                                         <a href="#" onClick={()=> showReward(0)}>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 1</div>
+                                            <div className="h6 mb-0 font-weight-bold text-gray-800">FastestApprover (1st)</div>
                                         </a>
-                                        <Dialog header="Congratulations! You just earned a Reward!" maximizable modal style={{ height:'70vw' }}  visible={showRewardDialog[0]} onHide={() => hideRewardDialog()}>
+                                        <Dialog header="Congratulations! You just earned a Reward!" footer="That was lightning fast! You Approved 326 orders in the past week!" maximizable modal style={{ height:'70vw' }}  visible={showRewardDialog[0]} onHide={() => hideRewardDialog()}>
                                             <img height="350px" src="img/trophy_3_1st.gif">
                                             </img>
                                         </Dialog>
@@ -378,17 +390,17 @@ function Dashboard() {
                                         {/* Pranjal: add dialog box with img tag src = from gifs (for each reward add a separate dialog box with diff file path)  */}
                                         
                                         <a href="#" onClick={()=> showReward(1)}>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 2</div>
+                                            <div className="h6 mb-0 font-weight-bold text-gray-800">QualityRacer (3rd) </div>
                                         </a>
-                                        <Dialog header="Congratulations! You just earned a Reward!" maximizable modal style={{ height:'70vw', backgroundColor:'#13132b'}} visible={showRewardDialog[1]} onHide={() => hideRewardDialog()}>
-                                            <img height="350px" src="img/bronze_medal.gif">
+                                        <Dialog header="Congratulations! You just earned a Reward!" footer="You balance so well between Speed And Quality! 239/257 Checked Orders Satisfied our mandatory Quality Requirements!" maximizable modal style={{ height:'70vw', backgroundColor:'#13132b'}} visible={showRewardDialog[1]} onHide={() => hideRewardDialog()}>
+                                            <img style={{position:'relative', left:'100px'}} height="350px" src="img/bronze_medal.gif">
                                             </img>
                                         </Dialog>
 
                                         <a href="#" onClick={()=> showReward(2)}>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">Reward 3</div>
+                                            <div className="h6 mb-0 font-weight-bold text-gray-800">QuickChecker (1st)</div>
                                         </a>
-                                        <Dialog header="Congratulations! You just earned a Reward!" maximizable modal style={{ height:'70vw' }}  visible={showRewardDialog[2]} onHide={() => hideRewardDialog()}>
+                                        <Dialog header="Congratulations! You just earned a Reward!" footer="Woah that was super Fast! You checked 257 Orders in the past week!"  maximizable modal style={{ height:'70vw' }}  visible={showRewardDialog[2]} onHide={() => hideRewardDialog()}>
                                             <img height="350px" src="img/trapeze_trophy_1st.gif">
                                             </img>
                                         </Dialog>
@@ -410,10 +422,10 @@ function Dashboard() {
                                     <div className="col mr-2">
                                     <div className="text-s font-weight-bold text-warning text-uppercase mb-1">
                                             Notifications</div>
-                                        <div id="notif1" className="h5 mb-0 font-weight-bold text-gray-800">ABC</div>
-                                        <div id="notif2" className="h5 mb-0 font-weight-bold text-gray-800">DIP XUS</div>
-                                        <div id="notif3" className="h5 mb-0 font-weight-bold text-gray-800">5 days till freedom</div>
-                                        <div id="notif4" style={{display:"none"}} className="h5 mb-0 font-weight-bold text-gray-800">This is the div element that will be shown after 5 seconds.</div>
+                                        <div id="notif1" className="h6 mb-0 font-weight-bold text-gray-800">Just in! New Order Received!</div>
+                                        <div id="notif2" className="h6 mb-0 font-weight-bold text-gray-800">Order #CX9031 processed.</div>
+                                        <div id="notif3" className="h6 mb-0 font-weight-bold text-gray-800">Order #TL2019 cancelled.</div>
+                                        <div id="notif4" style={{display:"none"}} className="h6 mb-0 font-weight-bold text-gray-800">Order #GH5576 delayed.</div>
 
                                     </div>
                                     <div className="col-auto">
@@ -434,13 +446,17 @@ function Dashboard() {
                                             <div className="col-auto">
                                                 <Tooltip target='#order1' content="Low Score (Order approval delayed)"/>
                                                 <Tooltip target='#order2' content="High Score (Superfast Approval!)"/>
-                                                <Tooltip target='#order3' content="Med Score (Order halted)"/>
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order1">Order 1: 30</div>
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order2">Order 2: 90</div>
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order3">Order 3: 70</div>
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order4" style={{display:"none"}}>Order 4: 70</div>
-                                                <Dialog header="Congratulations! You earned points!" maximizable modal style={{ height:'70vw' }}  visible={showPointsDialog} onHide={() => hidePointsDialog()}>
-                                                <img height="350px" src="img/points_earn(flag).gif"></img>
+                                                <Tooltip target='#order3' content="Med Score (Order cancelled)"/>
+                                                <Tooltip target='#order4' content="Med Score (Order halted)"/>
+                                                <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800" id="order1">Order CX0415: 30</div>
+                                                <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800" id="order2">Order CH0412: 90</div>
+                                                <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800" id="order3">Order CY0419: 50</div>
+                                                <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800" id="order4" style={{display:"none"}}>Order DA0422: 70</div>
+                                                <Dialog header="Congratulations! You earned points!" footer="You just earned 70 points for Approving Order DA0422 in-time!" maximizable modal style={{ height:'70vw' }}  visible={showPointsDialog} onHide={() => hidePointsDialog()}>
+                                                     <img style={{position:'relative', left:'50px'}} height="350px" src="img/points_earn(flag).gif"></img>
+                                                </Dialog>
+                                                <Dialog header="Congratulations! You just got Promoted to RACER!" footer="A Pat on your Back! Being as efficient as you are, you truly deserve this Title!" maximizable modal style={{ height:'50vw' }}  visible={showBadgeDialog} onHide={() => hideBadgeDialog()}>
+                                                    <img style={{position:'relative', left:'100px'}} height="350px" src="img/BT_3to4.gif"></img>
                                                 </Dialog>
                                             </div>
                                             {/* <div className="col">
@@ -468,7 +484,7 @@ function Dashboard() {
                                     <div className="col mr-2">
                                         <div className="text-s font-weight-bold text-success text-uppercase mb-1" style={{marginBottom:20}}>
                                             Leaderboard</div>
-                                        <div className="card">
+                                        <div className="box">
                                             <TreeTable value={node} className="leaderboard" tableStyle={{ minWidth: '50rem'}}>
                                             <Column field="Rank" header="Rank"></Column>
                                             <Column field="Name" header="Name"></Column>
