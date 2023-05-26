@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./Dashboard.css";
 const { Dialog } = require('primereact/dialog');
 const { Tooltip } = require('primereact/tooltip');
 const { ProgressBar } = require('primereact/progressbar');
+const { TreeTable } = require('primereact/treetable');
+const { Column } = require('primereact/column');
 const { Image } = require('primereact/image')
 
 
 
 function Dashboard() {
+    //reward dialog
     const [showRewardDialog, setShowRewardDialog] = useState([false, false, false]);
+    //points dialog
+    const [showPointsDialog, setShowPointsDialog] = useState(false);
 
     //user's current points
     const [userPoints, setUserPoints] = useState(1947);
@@ -17,7 +22,56 @@ function Dashboard() {
     const [milestonePoints, setMilestonePoints] = useState(2000);
 
     //leaderboard table
-    
+    let node=[
+        {
+        "key": "0",
+        "data":{
+            "Rank":"1",
+            "Name":"David Green",
+            "Team":"Sales",
+            "Score":"3000/5000"
+            }   
+        },
+        {
+        "key": "1",
+        "data":{
+            "Rank":"2",
+            "Name":"Rachel Stone",
+            "Team":"Sales",
+            "Score":"2800/5000"
+            }
+        },
+        {
+        "key": "2",
+        "data":{
+            "Rank":"3",
+            "Name":"Douglas Mcgee",
+            "Team":"Production",
+            "Score":"2770/5000"
+            }
+        },
+        {
+        "key": "3",
+        "data":{
+            "Rank":"4",
+            "Name":"Kate Heather",
+            "Team":"Inventory",
+            "Score":"2500/5000"
+            }
+        },
+        {
+            "key": "4",
+            "data":{
+                "Rank":"5",
+                "Name":"Simon Walker",
+                "Team":"Production",
+                "Score":"2000/5000"
+                }
+            },
+
+
+      ]
+
 
     function showReward(number){
         console.log("heelloooooooooooooooo"+number);
@@ -31,11 +85,37 @@ function Dashboard() {
         let tempShowRewardDialog = [false, false, false]
         setShowRewardDialog(tempShowRewardDialog);
     }
-  return (
-    <div>
-      <body id="page-top">
 
+    function hidePointsDialog(){
+        setShowPointsDialog(false);
+    }
+
+    function addNotif() {
+        var div = document.getElementById("notif4");
+        div.style.display = "block";
+        console.log("Function1 callled")
+      }
+
+    function addPoints() {
+        var div = document.getElementById("order4");
+        div.style.display = "block";
+        setShowPointsDialog(true);
+        console.log("Function2 callled")
+      }
+
+    useEffect(() => {
+        setTimeout(addNotif, 5000);
+        setTimeout(addPoints, 7000);
+        return () => {
+        };
+      }, []);
+
+  return (
+    <body>
+        
+    <div>
 {/* <!-- Page Wrapper --> */}
+<body id="page-top">
 <div id="wrapper"> 
 
     {/* <!-- Sidebar --> */}
@@ -48,119 +128,6 @@ function Dashboard() {
             </div>
             <div className="sidebar-brand-text mx-3"> Paradigmer-Client </div>
         </a>
-
-
-        {/* <!-- Divider --> */}
-        {/* <hr className="sidebar-divider my-0"/> */}
-
-        {/* <!-- Nav Item - Dashboard --> */}
-        {/* <li className="nav-item active">
-            <a className="nav-link" href="index.html">
-                <i className="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li> */}
-
-        {/* <!-- Divider -->
-        <hr className="sidebar-divider"/>
-
-        {/* <!-- Heading --> */}
-        {/* <div className="sidebar-heading">
-            Interface
-        </div> */}
-
-        {/* <!-- Nav Item - Pages Collapse Menu --> */}
-        {/* <li className="nav-item">
-            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                <i className="fas fa-fw fa-cog"></i>
-                <span>Components</span>
-            </a>
-            <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                    <h6 className="collapse-header">Custom Components:</h6>
-                    <a className="collapse-item" href="buttons.html">Buttons</a>
-                    <a className="collapse-item" href="cards.html">Cards</a>
-                </div>
-            </div>
-        </li> */}
-
-        {/* <!-- Nav Item - Utilities Collapse Menu --> */}
-        {/* <li className="nav-item">
-            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                aria-expanded="true" aria-controls="collapseUtilities">
-                <i className="fas fa-fw fa-wrench"></i>
-                <span>Utilities</span>
-            </a>
-            <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                    <h6 className="collapse-header">Custom Utilities:</h6>
-                    <a className="collapse-item" href="utilities-color.html">Colors</a>
-                    <a className="collapse-item" href="utilities-border.html">Borders</a>
-                    <a className="collapse-item" href="utilities-animation.html">Animations</a>
-                    <a className="collapse-item" href="utilities-other.html">Other</a>
-                </div>
-            </div>
-        </li> */}
-
-        {/* <!-- Divider --> */}
-        {/* <hr className="sidebar-divider"/> */}
-
-        {/* <!-- Heading --> */}
-        {/* <div className="sidebar-heading">
-            Addons
-        </div> */}
-
-        {/* <!-- Nav Item - Pages Collapse Menu --> */}
-        {/* <li className="nav-item">
-            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                aria-expanded="true" aria-controls="collapsePages">
-                <i className="fas fa-fw fa-folder"></i>
-                <span>Pages</span>
-            </a>
-            <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                    <h6 className="collapse-header">Login Screens:</h6>
-                    <a className="collapse-item" href="login.html">Login</a>
-                    <a className="collapse-item" href="register.html">Register</a>
-                    <a className="collapse-item" href="forgot-password.html">Forgot Password</a>
-                    <div className="collapse-divider"></div>
-                    <h6 className="collapse-header">Other Pages:</h6>
-                    <a className="collapse-item" href="404.html">404 Page</a>
-                    <a className="collapse-item" href="blank.html">Blank Page</a>
-                </div>
-            </div>
-        </li> */}
-
-        {/* <!-- Nav Item - Charts --> */}
-        {/* <li className="nav-item">
-            <a className="nav-link" href="charts.html">
-                <i className="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
-        </li> */}
-
-        {/* <!-- Nav Item - Tables --> */}
-        {/* <li className="nav-item">
-            <a className="nav-link" href="tables.html">
-                <i className="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
-        </li>
-        */}
-        {/* <!-- Divider --> */}
-        {/* <hr className="sidebar-divider d-none d-md-block"/> */}
-
-        {/* <!-- Sidebar Toggler (Sidebar) --> */}
-        {/* <div className="text-center d-none d-md-inline">
-            <button className="rounded-circle border-0" id="sidebarToggle"></button>
-        </div> */}
-
-        {/* <!-- Sidebar Message --> */}
-            {/* <div className="sidebar-card d-none d-lg-flex">
-                <img className="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..."/>
-                <p className="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a className="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div> */}
-
         </ul>  
         {/* <!-- End of Sidebar --> */}
 
@@ -177,20 +144,6 @@ function Dashboard() {
                 <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                     <i className="fa fa-bars"></i>
                 </button>
-
-                {/* <!-- Topbar Search --> */}
-                {/* <form
-                 className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div className="input-group">
-                        <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2"/>
-                        <div className="input-group-append">
-                            <button className="btn btn-primary" type="button">
-                                <i className="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form> */}
 
                 {/* <!-- Topbar Navbar --> */}
                 <ul className="navbar-nav ml-auto">
@@ -404,7 +357,7 @@ function Dashboard() {
                             <div className="card-body">
                             <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
-                                        <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        <div className="text-s font-weight-bold text-primary text-uppercase mb-1">
                                             My Rewards</div>
                                         
                                         <a href="#" onClick={()=> showReward(0)}>
@@ -449,33 +402,34 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* <!-- Leaderboard --> */}
+                    {/* <!-- Notifications --> */}
                     <div className="col-xl-4 col-md-6 mb-5">
-                        <div className="card border-left-success shadow h-100 py-2">
+                        <div className="card border-left-warning shadow h-100 py-2">
                             <div className="card-body">
                                 <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
-                                        <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Leaderboard</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                            table add
-                                        </div>
+                                    <div className="text-s font-weight-bold text-warning text-uppercase mb-1">
+                                            Notifications</div>
+                                        <div id="notif1" className="h5 mb-0 font-weight-bold text-gray-800">ABC</div>
+                                        <div id="notif2" className="h5 mb-0 font-weight-bold text-gray-800">DIP XUS</div>
+                                        <div id="notif3" className="h5 mb-0 font-weight-bold text-gray-800">5 days till freedom</div>
+                                        <div id="notif4" style={{display:"none"}} className="h5 mb-0 font-weight-bold text-gray-800">This is the div element that will be shown after 5 seconds.</div>
+
                                     </div>
                                     <div className="col-auto">
-                                        <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        <i className="fas fa-calendar fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </div> 
                     {/* <!-- Points Allocation --> */}
                     <div className="col-xl-4 col-md-6 mb-5">
                         <div className="card border-left-info shadow h-100 py-2">
                             <div className="card-body">
                                 <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
-                                        <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Points Allocation</div>
+                                        <div className="text-s font-weight-bold text-info text-uppercase mb-1">Points Allocation</div>
                                         <div className="row no-gutters align-items-center">
                                             <div className="col-auto">
                                                 <Tooltip target='#order1' content="Low Score (Order approval delayed)"/>
@@ -484,6 +438,10 @@ function Dashboard() {
                                                 <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order1">Order 1: 30</div>
                                                 <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order2">Order 2: 90</div>
                                                 <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order3">Order 3: 70</div>
+                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="order4" style={{display:"none"}}>Order 4: 70</div>
+                                                <Dialog header="Congratulations! You earned points!" maximizable modal style={{ height:'70vw' }}  visible={showPointsDialog} onHide={() => hidePointsDialog()}>
+                                                <img height="350px" src="img/points_earn(flag).gif"></img>
+                                                </Dialog>
                                             </div>
                                             {/* <div className="col">
                                                 <div className="progress progress-sm mr-2">
@@ -501,143 +459,29 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* <!-- Notifications --> */}
-                    <div className="col-xl-12 col-md-6 mb-5">
-                        <div className="card border-left-warning shadow h-100 py-2">
+                    
+                     {/* <!-- Leaderboard --> */}
+                     <div className="col-xl-12 col-md-6 mb-5">
+                        <div className="card border-left-success shadow h-100 py-2">
                             <div className="card-body">
                                 <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
-                                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Notifications</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">ABC</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">DIP XUS</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">5 days till freedom</div>
+                                        <div className="text-s font-weight-bold text-success text-uppercase mb-1" style={{marginBottom:20}}>
+                                            Leaderboard</div>
+                                        <div className="card">
+                                            <TreeTable value={node} className="leaderboard" tableStyle={{ minWidth: '50rem'}}>
+                                            <Column field="Rank" header="Rank"></Column>
+                                            <Column field="Name" header="Name"></Column>
+                                            <Column field="Team" header="Team"></Column> 
+                                            <Column field="Score" header="Score"></Column>
+                                            </TreeTable>
+                                        </div>
                                     </div>
-                                    <div className="col-auto">
-                                        <i className="fas fa-calendar fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-
-
-                {/* <!-- Content Row --> */}
-
-                {/* <div className="row"> */}
-
-                    {/* <!-- Area Chart --> */}
-                    {/* <div className="col-xl-8 col-lg-7">
-                        <div className="card shadow mb-4"> */}
-                            {/* <!-- Card Header - Dropdown --> */}
-                            {/* <div
-                             className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                <div className="dropdown no-arrow">
-                                    <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                        aria-labelledby="dropdownMenuLink">
-                                        <div className="dropdown-header">Dropdown Header:</div>
-                                        <a className="dropdown-item" href="#">Action</a>
-                                        <a className="dropdown-item" href="#">Another action</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
-                            </div> */}
-                            {/* <!-- Card Body --> */}
-                            {/* <div className="card-body">
-                                <div className="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
-
-                    {/* <!-- Pie Chart --> */}
-                    {/* <div className="col-xl-4 col-lg-5">
-                        <div className="card shadow mb-4"> */}
-                            {/* <!-- Card Header - Dropdown --> */}
-                            {/* <div
-                             className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                <div className="dropdown no-arrow">
-                                    <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                        aria-labelledby="dropdownMenuLink">
-                                        <div className="dropdown-header">Dropdown Header:</div>
-                                        <a className="dropdown-item" href="#">Action</a>
-                                        <a className="dropdown-item" href="#">Another action</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
-                            </div> */}
-                            {/* <!-- Card Body --> */}
-                            {/* <div className="card-body">
-                                <div className="chart-pie pt-4 pb-2">
-                                    <canvas id="myPieChart"></canvas>
-                                </div>
-                                <div className="mt-4 text-center small">
-                                    <span className="mr-2">
-                                        <i className="fas fa-circle text-primary"></i> Direct
-                                    </span>
-                                    <span className="mr-2">
-                                        <i className="fas fa-circle text-success"></i> Social
-                                    </span>
-                                    <span className="mr-2">
-                                        <i className="fas fa-circle text-info"></i> Referral
-                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> */}
-
-                {/* <!-- Content Row --> */}
-                {/* <div className="row"> */}
-
-                    {/* <!-- Content Column --> */}
-                    {/* <div className="col-lg-6 mb-4"> */}
-
-                        {/* <!-- Project Card Example --> */}
-                        {/* <div className="card shadow mb-4">
-                            <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-primary">Projects</h6>
-                            </div>
-                            <div className="card-body">
-                                <h4 className="small font-weight-bold">Server Migration <span
-                                     className="float-right">20%</span></h4>
-                                <div className="progress mb-4">
-                                    <div className="progress-bar bg-danger a2" role="progressbar"></div>
-                                </div>
-                                <h4 className="small font-weight-bold">Sales Tracking <span
-                                     className="float-right">40%</span></h4>
-                                <div className="progress mb-4">
-                                    <div className="progress-bar bg-warning a3" role="progressbar"></div>
-                                </div>
-                                <h4 className="small font-weight-bold">Customer Database <span
-                                     className="float-right">60%</span></h4>
-                                <div className="progress mb-4">
-                                    <div className="progress-bar a4" role="progressbar"></div>
-                                </div>
-                                <h4 className="small font-weight-bold">Payout Details <span
-                                     className="float-right">80%</span></h4>
-                                <div className="progress mb-4">
-                                    <div className="progress-bar bg-info a5" role="progressbar"></div>
-                                </div>
-                                <h4 className="small font-weight-bold">Account Setup <span
-                                     className="float-right">Complete!</span></h4>
-                                <div className="progress"> */}
-                                    {/* A6 */}
-                                   
+                </div> 
             </div>
             {/* <!-- /.container-fluid --> */}
 
@@ -687,6 +531,7 @@ function Dashboard() {
 
 </body>
     </div>
+    </body>
   )
 }
 

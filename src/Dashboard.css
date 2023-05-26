@@ -26,3 +26,11 @@
 {
     width: 25rem;
 }
+#myDiv {
+    display: none;
+  }
+.leaderboard
+{
+    border: 2px solid forestgreen;
+    background-color: azure;
+}
